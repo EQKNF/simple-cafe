@@ -51,8 +51,12 @@ body {
 .logo {
   margin-left: 20%;
   margin-right: 20%;
-  transition: font-size 0.2s;
+  width: 100px;
   font-size: 26px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  color: var(--black);
+  transition: font-size 0.2s;
 }
 
 .small-r {
@@ -65,9 +69,6 @@ body {
 }
 
 .logo a {
-  color: var(--black);
-  font-weight: 700;
-  letter-spacing: 1px;
   text-decoration: none;
   white-space: nowrap;
 }
@@ -82,7 +83,6 @@ body {
   margin: 0 16px;
   white-space: nowrap;
   overflow: hidden;
-  align-items: center;
 }
 
 .nav-links a {
@@ -225,11 +225,7 @@ body {
   position: fixed;
   top: var(--header-height);
   left: 0;
-  height: 80vh;
-  width: 50%;
-  background-color: var(--tertiary-color);
-  box-shadow: 3px 3px 5px rgba(0, 0, 0, 0.1);
-  border-radius: 50px;
+  width: 32rem;
   text-wrap: nowrap;
   transform: translateX(-15%);
 }
@@ -242,27 +238,86 @@ body {
 }
 
 .sidebar-header {
+  position: relative;
   height: 50px;
   padding: 16px 60px 12px;
   background-color: var(--tertiary-color);
   box-shadow: 3px 3px 5px rgba(0, 0, 0, 0.1);
+  z-index: 2;
 }
 
 .sidebar-tab-categories-links {
   display: flex;
   flex-direction: row;
-  justify-content: flex-start;
-  margin-left: 20%;
-  margin-right: 20%;
+  z-index: 2;
+}
+.sidebar-tab-categories-links li {
+  transition: all 0.2s ease;
+}
+
+.sidebar-tab-categories-links li:hover {
+  transform: translateY(-5px);
 }
 
 .sidebar-tab-categories-links a {
   color: var(--white);
-  margin-right: 40px;
+  margin-left: 40px;
+  font-size: 1.3rem;
+  letter-spacing: 1px;
+  font-weight: 500;
+}
+
+.sidebar-container {
+  transform: translateX(-520px);
+  transition: 0.2s ease;
+}
+
+.sidebar-toggle-active {
+  transform: translateX(-60px);
+}
+
+.sidebar-content {
+  position: relative;
+  z-index: 1;
+}
+
+.sidebar-main-tabs {
+  display: flex;
+  flex-direction: column;
+  height: 80vh;
+  padding-top: 65px;
+  padding-left: 100px;
+  padding-bottom: 20px;
+  background-color: var(--tertiary-color);
+  box-shadow: 3px 3px 5px rgba(0, 0, 0, 0.1);
+  border-radius: 50px;
+  transform: translateY(-50px);
+  overflow-y: auto;
+}
+
+.sidebar-main-tabs li {
+  margin: auto;
+  flex-grow: 1;
+  margin-top: 20px;
+}
+
+.sidebar-main-tabs li a {
+  color: var(--white);
   font-size: 1.2rem;
+  letter-spacing: 1px;
+  font-weight: 600;
 }
 
 .sidebar-main-tabs .service-tab,
 .sidebar-main-tabs .about-tab {
   display: none;
+}
+
+@keyframes bounce {
+  from {
+    transform: translateY(0);
+  }
+  to {
+    transform: translateY(-5px);
+  }
 }
