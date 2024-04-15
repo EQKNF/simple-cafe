@@ -47,11 +47,66 @@ const navTabs = () => {
   });
 };
 
+const carouselSlider = () => {
+  const imgSlides = document.querySelectorAll(".carousel-slide img");
+  let currentSlide = 0;
+  const maxSlides = imgSlides.length;
+  let slideInterval;
+
+  const showSlide = (slideIndex) => {
+    imgSlides.forEach((slide, index) => {
+      if (index === slideIndex) {
+        slide.style.display = "block";
+      } else {
+        slide.style.display = "none";
+      }
+    });
+  };
+
+  const nextSlide = () => {
+    currentSlide = (currentSlide + 1) % maxSlides;
+    showSlide(currentSlide);
+    restartSlideInterval();
+  };
+
+  const prevSlide = () => {
+    currentSlide = (currentSlide - 1 + maxSlides) % maxSlides;
+    showSlide(currentSlide);
+    restartSlideInterval();
+  };
+
+  const initializeCarousel = () => {
+    showSlide(currentSlide);
+    document
+      .getElementById("carousel-next-btn")
+      .addEventListener("click", () => {
+        nextSlide();
+      });
+    document
+      .getElementById("carousel-pre-btn")
+      .addEventListener("click", () => {
+        prevSlide();
+      });
+    startSlideInterval();
+  };
+
+  const startSlideInterval = () => {
+    slideInterval = setInterval(nextSlide, 5000);
+  };
+
+  const restartSlideInterval = () => {
+    clearInterval(slideInterval);
+    startSlideInterval();
+  };
+
+  initializeCarousel();
+};
+
 const toTheTopBtnShow = () => {
   const toTheTopBtn = document.getElementById("to-the-top-btn");
 
   window.addEventListener("scroll", () => {
-    const shouldShow = window.scrollY > window.innerHeight * 0.75;
+    const shouldShow = window.scrollY > window.innerHeight * 0.5;
     toTheTopBtn.classList.toggle("show", shouldShow);
   });
 };
@@ -63,6 +118,7 @@ const app = () => {
   });
   navTabs();
   toTheTopBtnShow();
+  carouselSlider();
 };
 
 app();
