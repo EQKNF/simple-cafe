@@ -57,7 +57,8 @@ body {
   font-weight: 700;
   letter-spacing: 1px;
   color: var(--black);
-  transition: font-size 0.2s;
+  transform: scale(1);
+  transition: all 0.2s ease;
 }
 
 .small-r {
@@ -65,7 +66,7 @@ body {
 }
 
 .logo:hover {
-  font-size: 28px;
+  transform: scale(1.1);
   color: var(--tertiary-color);
 }
 
@@ -297,7 +298,7 @@ body {
   max-width: 100%;
   min-width: auto;
   margin-top: calc(var(--header-height));
-  height: 100vh;
+  height: 200vh;
 }
 
 .main-container {
@@ -309,7 +310,7 @@ body {
 .to-the-top-btn {
   position: fixed;
   bottom: 40px;
-  right: 0px;
+  right: 20px;
   margin: 5px;
 
   background-color: darkgrey;
@@ -319,18 +320,23 @@ body {
   cursor: pointer;
   text-align: center;
   text-decoration: none;
-  transition: background-color 0.3s;
+  transition: background-color 0.1s;
+  transition: transform 0.3s ease;
+  transform: translateY(100px);
 }
 .to-the-top-btn:hover {
   background-color: grey;
 }
 
-.to-the-top-btn a {
+.to-the-top-btn.show {
+  transform: translateY(0px);
+}
+
+.to-the-top-btn span {
   color: var(--black);
   text-decoration: none;
-  font-size: 1rem;
-  font-weight: 600;
-  padding: 50px 40px;
+  padding: 8px;
+  font-size: 2rem;
 }
 
 .footer-wrapper {

@@ -47,12 +47,22 @@ const navTabs = () => {
   });
 };
 
+const toTheTopBtnShow = () => {
+  const toTheTopBtn = document.getElementById("to-the-top-btn");
+
+  window.addEventListener("scroll", () => {
+    const shouldShow = window.scrollY > window.innerHeight * 0.75;
+    toTheTopBtn.classList.toggle("show", shouldShow);
+  });
+};
+
 const app = () => {
   document.querySelector(".sidebar-btn").addEventListener("click", (event) => {
     event.stopPropagation();
     toggleSidebar();
   });
   navTabs();
+  toTheTopBtnShow();
 };
 
 app();
