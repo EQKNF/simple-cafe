@@ -1,0 +1,38 @@
+[
+    {
+        "id": 1,
+        "name": "gitar1",
+        "price": 100,
+        "img": "img/products/g1.png"
+    }, 
+    {
+        "id": 2,
+        "name": "gitar2",
+        "price": 200,
+        "img": "img/products/g2.png"
+    },
+    {
+        "id": 3,
+        "name": "gitar3",
+        "price": 300,
+        "img": "img/products/g3.png"
+    }, 
+    {
+        "id": 4,
+        "name": "gitar4",
+        "price": 400,
+        "img": "img/products/g4.png"
+    }, 
+    {
+        "id": 5,
+        "name": "gitar5",
+        "price": 500,
+        "img": "img/products/g5.png"
+    }, 
+    {
+        "id": 6,
+        "name": "gitar6",
+        "price": 600,
+        "img": "img/products/g6.png"
+    }
+]
