@@ -200,7 +200,7 @@ productDataUpdate = () => {
         let newCart = document.createElement("div");
         newCart.classList.add("item");
         let positionProduct = productlist.findIndex(
-          (Value) => value.id === cart.productId
+          (value) => value.id === cart.productId
         );
         let info = productlist[positionProduct];
         newCart.dataset.id = cart.productId;
