@@ -1,3 +1,154 @@
+productDataUpdate = () => {
+  const listProductsHTML = document.querySelector(".product-list");
+  const listCartHTML = document.querySelector(".cart-list");
+  let iconCartSpan = document.querySelector(".icon-cart .number-cart");
+  let products = [];
+  let cart = [];
+
+  const addDataToHTML = () => {
+    listProductsHTML.innerHTML = "";
+    if (products.length > 0) {
+      products.forEach((product) => {
+        let newProduct = document.createElement("div");
+        newProduct.classList.add("item");
+        newProduct.dataset.id = product.id;
+        newProduct.innerHTML = `
+          <img src="${product.img}" alt="" width="250" height="500" />
+          <h3>${product.name}</h3>
+          <div class="item-price">$${product.price}</div>
+          <button class="add-to-cart">Add To Cart</button>
+        `;
+        listProductsHTML.appendChild(newProduct);
+      });
+    }
+  };
+
+  listProductsHTML.addEventListener("click", (event) => {
+    let positionClick = event.target;
+    if (positionClick.classList.contains("add-to-cart")) {
+      let id_product = positionClick.parentElement.dataset.id;
+      addToCart(id_product);
+    }
+  });
+
+  const addToCart = (productId) => {
+    let positionThisProductInCart = cart.findIndex(
+      (value) => value.productId == productId
+    );
+    if (cart.length <= 0) {
+      cart = [
+        {
+          productId: productId,
+          quantity: 1,
+        },
+      ];
+    } else if (positionThisProductInCart < 0) {
+      cart.push({
+        productId: productId,
+        quantity: 1,
+      });
+    } else {
+      cart[positionThisProductInCart].quantity =
+        cart[positionThisProductInCart].quantity + 1;
+    }
+    addCartToHTML();
+    addCartToMemory();
+  };
+  const addCartToMemory = () => {
+    localStorage.setItem("cart", JSON.stringify(cart));
+  };
+
+  const addCartToHTML = () => {
+    listCartHTML.innerHTML = "";
+    let totalQuantity = 0;
+    if (cart.length > 0) {
+      cart.forEach((item) => {
+        totalQuantity = totalQuantity + item.quantity;
+        let newItem = document.createElement("div");
+        newItem.classList.add("item");
+        newItem.dataset.id = item.productId;
+
+        let positionProduct = products.findIndex(
+          (value) => value.id == item.productId
+        );
+        let info = products[positionProduct];
+        listCartHTML.appendChild(newItem);
+        newItem.innerHTML = `
+                  <div class="item">
+                  <div class="image">
+                    <img src="${info.img}" />
+                  </div>
+                  <div class="name">${info.name}</div>
+                  <div class="totalPrice">$${info.price * item.quantity}</div>
+                  <div class="quantity">
+                    <span class="minus">-</span>
+                    <span>${item.quantity}</span>
+                    <span class="plus">+</span>
+                  </div>
+              `;
+      });
+    }
+    iconCartSpan.innerText = totalQuantity;
+  };
+
+  listCartHTML.addEventListener("click", (event) => {
+    let positionClick = event.target;
+    if (
+      positionClick.classList.contains("minus") ||
+      positionClick.classList.contains("plus")
+    ) {
+      let productId = positionClick.parentElement.parentElement.dataset.id;
+      let type = "minus";
+      if (positionClick.classList.contains("plus")) {
+        type = "plus";
+      }
+      changeQuantityCart(productId, type);
+    }
+  });
+
+  const changeQuantityCart = (productId, type) => {
+    let positionItemInCart = cart.findIndex(
+      (value) => value.productId == productId
+    );
+    if (positionItemInCart >= 0) {
+      let info = cart[positionItemInCart];
+      switch (type) {
+        case "plus":
+          cart[positionItemInCart].quantity =
+            cart[positionItemInCart].quantity + 1;
+          break;
+
+        default:
+          let changeQuantity = cart[positionItemInCart].quantity - 1;
+          if (changeQuantity > 0) {
+            cart[positionItemInCart].quantity = changeQuantity;
+          } else {
+            cart.splice(positionItemInCart, 1);
+          }
+          break;
+      }
+    }
+    addCartToHTML();
+    addCartToMemory();
+  };
+
+  const fetchProducts = () => {
+    fetch("js/products.json")
+      .then((response) => response.json())
+      .then((data) => {
+        products = data;
+        addDataToHTML();
+
+        if (localStorage.getItem("cart")) {
+          cart = JSON.parse(localStorage.getItem("cart"));
+          addCartToHTML();
+        }
+      });
+  };
+
+  fetchProducts();
+};
+
 const toggleSidebar = () => {
   const sidebar = document.querySelector(".sidebar-container");
   const line1 = document.querySelector(".line1");
@@ -123,107 +274,6 @@ const cartTabSlider = () => {
   closeShoppingCartBtn.addEventListener("click", () => {
     cartTab.classList.remove("cart-tab-active");
   });
-};
-
-productDataUpdate = () => {
-  const listProductsCartHTML = document.querySelector(".product-list");
-  const cartListHTML = document.querySelector(".cart-list");
-  const cartIcon = document.querySelector(".icon-cart span");
-
-  let productlist = [];
-  let carts = [];
-
-  const addDataToHTML = () => {
-    listProductsCartHTML.innerHTML = "";
-    if (productlist.length > 0) {
-      productlist.forEach((product) => {
-        let newProduct = document.createElement("div");
-        newProduct.classList.add("item");
-        newProduct.dataset.id = product.id;
-        newProduct.innerHTML = `
-          <img src="${product.img}" alt="" width="250" height="500" />
-          <h3>${product.name}</h3>
-          <div class="item-price">$${product.price}</div>
-          <button class="add-to-cart">Add To Cart</button>
-        `;
-        listProductsCartHTML.appendChild(newProduct);
-      });
-    }
-  };
-
-  const fetchProducts = () => {
-    fetch("js/products.json")
-      .then((response) => response.json())
-      .then((data) => {
-        productlist = data;
-        console.log(productlist);
-        addDataToHTML();
-      });
-  };
-
-  fetchProducts();
-
-  listProductsCartHTML.addEventListener("click", (event) => {
-    let positionClick = event.target;
-    if (positionClick.classList.contains("add-to-cart")) {
-      let productId = positionClick.parentElement.dataset.id;
-      addToCart(productId);
-    }
-  });
-
-  const addToCart = (productId) => {
-    let positionThisProductInCart = carts.findIndex(
-      (value) => value.productId == productId
-    );
-    if (carts.length <= 0) {
-      carts = [
-        {
-          productId: productId,
-          quantity: 1,
-        },
-      ];
-    } else if (positionThisProductInCart < 0) {
-      carts.push({
-        productId: productId,
-        quantity: 1,
-      });
-    } else {
-      carts[positionThisProductInCart].quantity += 1;
-    }
-    addCartTOHTML();
-  };
-
-  const addCartTOHTML = () => {
-    cartListHTML.innerHTML = "";
-    if (carts.length > 0) {
-      carts.forEach((cart) => {
-        let newCart = document.createElement("div");
-        newCart.classList.add("item");
-        let positionProduct = productlist.findIndex(
-          (value) => value.id === cart.productId
-        );
-        let info = productlist[positionProduct];
-        newCart.dataset.id = cart.productId;
-        newCart.innerHTML = `
-          <div class="image">
-              <img src="${info.img}" alt="" />
-            </div>
-            <div class="name">
-              ${info.name}
-            </div>
-            <div class="total-price">
-              $${info.price * cart.quantity}
-            </div>
-            <div class="quantity">
-              <span class="minus">-</span>
-              <span>${cart.quantity}</span>
-              <span class="plus">+</span>
-            </div>
-        `;
-        cartListHTML.appendChild(newCart);
-      });
-    }
-  };
 };
 
 const app = () => {
