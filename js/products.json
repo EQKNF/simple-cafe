@@ -25,14 +25,26 @@
     }, 
     {
         "id": 5,
-        "name": "gitar5",
+        "name": "b1",
         "price": 500,
-        "img": "img/products/g5.png"
+        "img": "img/products/b1.jpg"
     }, 
     {
         "id": 6,
-        "name": "gitar6",
+        "name": "b2",
         "price": 600,
-        "img": "img/products/g6.png"
+        "img": "img/products/b2.png"
+    },
+    {
+        "id": 7,
+        "name": "b3",
+        "price": 700,
+        "img": "img/products/b3.png"
+    },    
+    {
+        "id": 8,
+        "name": "b4",
+        "price": 800,
+        "img": "img/products/b4.png"
     }
 ]

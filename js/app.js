@@ -13,10 +13,10 @@ productDataUpdate = () => {
         newProduct.classList.add("item");
         newProduct.dataset.id = product.id;
         newProduct.innerHTML = `
-          <img src="${product.img}" alt="" width="250" height="500" />
-          <h3>${product.name}</h3>
-          <div class="item-price">$${product.price}</div>
-          <button class="add-to-cart">Add To Cart</button>
+            <img src="${product.img}" alt="" width="250" height="500" />
+            <h3>${product.name}</h3>
+            <div class="item-price">$${product.price}</div>
+            <button class="add-to-cart">Add To Cart</button>
         `;
         listProductsHTML.appendChild(newProduct);
       });
@@ -75,15 +75,15 @@ productDataUpdate = () => {
         listCartHTML.appendChild(newItem);
         newItem.innerHTML = `
                   <div class="item">
-                  <div class="image">
-                    <img src="${info.img}" />
-                  </div>
-                  <div class="name">${info.name}</div>
-                  <div class="totalPrice">$${info.price * item.quantity}</div>
-                  <div class="quantity">
-                    <span class="minus">-</span>
-                    <span>${item.quantity}</span>
-                    <span class="plus">+</span>
+                    <div class="image">
+                      <img src="${info.img}" />
+                    </div>
+                    <div class="name">${info.name}</div>
+                    <div class="totalPrice">$${info.price * item.quantity}</div>
+                    <div class="quantity">
+                      <span class="minus">-</span>
+                      <span>${item.quantity}</span>
+                      <span class="plus">+</span>
                   </div>
               `;
       });
@@ -97,7 +97,8 @@ productDataUpdate = () => {
       positionClick.classList.contains("minus") ||
       positionClick.classList.contains("plus")
     ) {
-      let productId = positionClick.parentElement.parentElement.dataset.id;
+      let productId =
+        positionClick.parentElement.parentElement.parentElement.dataset.id;
       let type = "minus";
       if (positionClick.classList.contains("plus")) {
         type = "plus";
@@ -111,7 +112,6 @@ productDataUpdate = () => {
       (value) => value.productId == productId
     );
     if (positionItemInCart >= 0) {
-      let info = cart[positionItemInCart];
       switch (type) {
         case "plus":
           cart[positionItemInCart].quantity =
